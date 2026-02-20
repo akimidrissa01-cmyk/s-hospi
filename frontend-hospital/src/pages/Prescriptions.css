@@ -1,0 +1,181 @@
+/* ===========================
+   PAGE PRESCRIPTIONS
+   =========================== */
+
+.prescriptions-container {
+  margin-left: 220px;
+  padding: 2.5rem;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.prescriptions-container h1 {
+  color: var(--blue-light);
+  font-size: 2rem;
+}
+
+/* ===========================
+   Bouton flottant
+   =========================== */
+
+.fab-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fab {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--blue-primary);
+  color: #fff;
+  font-size: 1.8rem;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.fab:hover {
+  background-color: var(--blue-light);
+  transform: scale(1.1);
+}
+
+/* ===========================
+   Formulaire
+   =========================== */
+
+.form-container {
+  background-color: var(--bg-card);
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+}
+
+.form-container h2 {
+  color: var(--blue-light);
+  margin-bottom: 1.4rem;
+}
+
+.prescription-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.form-section {
+  background-color: var(--bg-secondary);
+  padding: 1.2rem 1.4rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.form-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--blue-light);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem 1.4rem;
+}
+
+.prescription-form input,
+.prescription-form select,
+.prescription-form textarea {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.prescription-form textarea {
+  min-height: 70px;
+  max-height: 110px;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-actions .edit-btn {
+  width: 150px;
+}
+
+/* ===========================
+   Tableau
+   =========================== */
+
+.prescriptions-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-card);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+}
+
+.prescriptions-table th,
+.prescriptions-table td {
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.prescriptions-table th {
+  background-color: var(--bg-primary);
+  color: var(--blue-light);
+}
+
+.prescriptions-table tr:nth-child(even) {
+  background-color: var(--bg-card);
+}
+
+.prescriptions-table tr:hover {
+  background-color: var(--bg-secondary);
+}
+
+/* ===========================
+   Boutons
+   =========================== */
+
+.edit-btn {
+  background-color: var(--blue-primary);
+  border: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.edit-btn:hover {
+  background-color: var(--blue-light);
+  transform: translateY(-2px);
+}
+
+.delete-btn {
+  background-color: #dc2626;
+  border: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #ff4c4c;
+  transform: translateY(-2px);
+}

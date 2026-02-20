@@ -1,0 +1,70 @@
+:root {
+  --bg-primary: #121212; /* fond principal noir */
+  --bg-card: #1e1e2f; /* fond des cartes légèrement plus clair */
+  --blue-light: #4ea8de; /* accent bleu clair */
+  --text-primary: #ffffff; /* texte principal blanc */
+  --text-secondary: #c0c0c0; /* texte secondaire gris clair */
+  --shadow-card: rgba(0, 0, 0, 0.5);
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.dashboard-content {
+  margin-left: 220px;
+  padding: 2.5rem;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  transition: background-color 0.3s ease;
+}
+
+.dashboard-content h1 {
+  color: var(--blue-light);
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.cards-container {
+  display: flex;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: fl;
+}
+
+.card {
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--shadow-card);
+}
+
+.card-title {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.card-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--blue-light);
+}
+
+/* messages d'erreur */
+.error {
+  color: #ff4c4c;
+  font-weight: 500;
+  margin-top: 1rem;
+}

@@ -1,0 +1,196 @@
+/* Container principal */
+.patients-container {
+  margin-left: 220px; /* espace pour la sidebar */
+  padding: 2.5rem;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* espace entre le titre, le formulaire et le tableau */
+}
+
+/* Titre de la page */
+.patients-container h1 {
+  color: var(--blue-light);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Bouton Ajouter / Modifier */
+.edit-btn {
+  background-color: var(--blue-primary);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  margin-bottom: 1rem;
+}
+
+.edit-btn:hover {
+  background-color: var(--blue-light);
+  transform: translateY(-2px);
+}
+
+/* Bouton Supprimer */
+.delete-btn {
+  background-color: var(--danger);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+  transform: translateY(-2px);
+}
+
+/* Formulaire patient */
+.patient-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  background-color: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.patient-form input,
+.patient-form select,
+.patient-form textarea {
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.patient-form textarea {
+  resize: vertical;
+}
+
+/* Tableau des patients */
+.patients-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-secondary);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.patients-table th,
+.patients-table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  color: var(--text-primary);
+}
+
+.patients-table th {
+  background-color: var(--bg-tertiary);
+  color: var(--blue-light);
+  font-weight: 600;
+}
+
+.patients-table tr:nth-child(even) {
+  background-color: var(--bg-secondary);
+}
+
+.patients-table tr:hover {
+  background-color: var(--bg-tertiary);
+}
+
+/* Actions dans le tableau */
+.patients-table td button {
+  margin-right: 0.3rem;
+}
+
+
+/* Conteneur du bouton pour aligner à droite */
+.fab-container {
+  display: flex;
+  justify-content: flex-end; /* alignement à droite */
+  margin-bottom: 0rem;       /* espace entre le bouton et le tableau */
+}
+
+/* Bouton circulaire */
+.fab {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--blue-primary);
+  color: white;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.fab:hover {
+  background-color: var(--blue-light);
+  transform: scale(1.1);
+}
+
+/* Conteneur du formulaire */
+.form-container {
+  background-color: var(--bg-secondary);
+  padding: 2rem 2.5rem;      /* plus de padding autour */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  margin-bottom: 2.5rem;
+}
+
+/* Titre du formulaire */
+.form-container h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  color: var(--blue-light);
+}
+
+/* Formulaire structuré en grille responsive */
+.patient-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem 3rem;  /* espace vertical 1.5rem, horizontal 2rem */
+}
+
+/* Champs du formulaire */
+.patient-form input,
+.patient-form select,
+.patient-form textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;       /* plus de padding pour respirer */
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+/* Texte multi-ligne */
+.patient-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Bouton du formulaire */
+.patient-form .edit-btn {
+  grid-column: 1 / -1; /* occupe toute la largeur */
+  justify-self: end;    /* aligné à droite */
+  width: 130px;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+}

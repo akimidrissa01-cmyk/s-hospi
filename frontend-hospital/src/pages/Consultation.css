@@ -1,0 +1,203 @@
+/* =============================
+   VARIABLES GLOBALES
+============================= */
+:root {
+  --bg-primary: #121212;
+  --bg-secondary: #181818;
+  --bg-card: #1e1e2f;
+  --blue-primary: #2563eb;
+  --blue-light: #4ea8de;
+  --text-primary: #ffffff;
+  --text-secondary: #c0c0c0;
+  --border-color: #2a2a2a;
+}
+
+/* =============================
+   CONTAINER PRINCIPAL
+============================= */
+.consultations-container {
+  margin-left: 220px;
+  padding: 2.5rem;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+/* =============================
+   TITRE
+============================= */
+.consultations-container h1 {
+  color: var(--blue-light);
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* =============================
+   BOUTON +
+============================= */
+.fab-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fab {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--blue-primary);
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.fab:hover {
+  background-color: var(--blue-light);
+  transform: scale(1.08);
+}
+
+/* =============================
+   FORMULAIRE
+============================= */
+.consultation-form-container {
+  background-color: var(--bg-card);
+  padding: 1.8rem 2rem;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.consultation-form-container h2 {
+  color: var(--blue-light);
+  font-size: 1.3rem;
+  margin-bottom: 1.4rem;
+}
+
+/* Grille */
+.consultation-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem 1.8rem;
+}
+
+/* Champs */
+.consultation-form input,
+.consultation-form select,
+.consultation-form textarea {
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.consultation-form input:focus,
+.consultation-form select:focus,
+.consultation-form textarea:focus {
+  border-color: var(--blue-light);
+  box-shadow: 0 0 0 2px rgba(78,168,222,0.15);
+}
+
+/* Textarea propre */
+.consultation-form textarea {
+  grid-column: span 2;
+  resize: vertical;
+  min-height: 70px;
+  max-height: 120px;
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .consultation-form textarea {
+    grid-column: span 1;
+  }
+}
+
+/* Bouton submit */
+.consultation-form .edit-btn {
+  grid-column: 1 / -1;
+  justify-self: end;
+  width: 130px;
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+}
+
+/* =============================
+   TABLEAU
+============================= */
+.consultations-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-card);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.consultations-table th,
+.consultations-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  color: var(--text-primary);
+}
+
+.consultations-table th {
+  background-color: var(--bg-secondary);
+  color: var(--blue-light);
+  font-weight: 600;
+}
+
+.consultations-table tr:nth-child(even) {
+  background-color: rgba(255,255,255,0.02);
+}
+
+.consultations-table tr:hover {
+  background-color: rgba(78,168,222,0.05);
+}
+
+/* =============================
+   ACTIONS
+============================= */
+.consultations-table td button {
+  margin-right: 0.4rem;
+}
+
+.edit-btn {
+  background-color: var(--blue-primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+}
+
+.edit-btn:hover {
+  background-color: var(--blue-light);
+  transform: translateY(-1px);
+}
+
+.delete-btn {
+  background-color: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+}
+
+.delete-btn:hover {
+  background-color: #ff4c4c;
+  transform: translateY(-1px);
+}

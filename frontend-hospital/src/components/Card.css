@@ -1,0 +1,38 @@
+/* Card container */
+.card {
+  background-color: #1a1a1a;
+  border: 1px solid #333333;
+  border-radius: 12px;
+  padding: 2.5rem 2rem; /* plus de padding vertical et horizontal */
+  min-width: 220px;      /* un peu plus large */
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem; /* espace entre le titre et la valeur */
+  margin: 10;
+}
+
+/* Hover effect */
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Title styling */
+.card-title {
+  color: #3399ff;
+  font-size: 1.2rem; /* un peu plus grand */
+  margin: 0;         /* supprimer margin-bottom, remplacé par gap */
+  font-weight: 500;
+}
+
+/* Value styling */
+.card-value {
+  color: #0080ff;
+  font-size: 1.8rem;  /* légèrement plus grand */
+  font-weight: bold;
+  margin: 0;
+}
