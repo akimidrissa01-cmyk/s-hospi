@@ -8,7 +8,6 @@ const Navbar = () => {
   return (
     <div className="navbar">
         <br></br>
-   
       <button onClick={logout} className="logout-btn">
         Logout
       </button>

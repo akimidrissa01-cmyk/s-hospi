@@ -201,3 +201,423 @@
   background-color: #ff4c4c;
   transform: translateY(-1px);
 }
+
+/* =============================
+   BOUTON VISITES
+============================= */
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.visit-toggle-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.visit-toggle-btn:hover {
+  background-color: var(--blue-primary);
+  border-color: var(--blue-primary);
+}
+
+.visit-toggle-btn.active {
+  background-color: var(--blue-primary);
+  border-color: var(--blue-primary);
+}
+
+/* =============================
+   PANNEAU VISITES
+============================= */
+.visits-panel {
+  background-color: var(--bg-card);
+  padding: 1.8rem 2rem;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.visits-panel h2 {
+  color: var(--blue-light);
+  font-size: 1.3rem;
+  margin-bottom: 1.4rem;
+}
+
+/* Liste des visites */
+.visits-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.no-visits {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 2rem;
+  grid-column: 1 / -1;
+}
+
+.visit-card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.2s ease;
+}
+
+.visit-card:hover {
+  border-color: var(--blue-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.visit-number {
+  background-color: var(--blue-primary);
+  color: #fff;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.visit-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.visit-name {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.visit-date {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* Détails du patient */
+.visit-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--blue-light);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0;
+  text-align: left;
+}
+
+.back-btn:hover {
+  text-decoration: underline;
+}
+
+.patient-info-card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.patient-info-card h3 {
+  color: var(--blue-light);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.info-value {
+  color: var(--text-primary);
+}
+
+.consult-btn {
+  background-color: var(--blue-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  align-self: flex-start;
+}
+
+.consult-btn:hover {
+  background-color: var(--blue-light);
+}
+
+/* =============================
+   PATIENT SÉLECTIONNÉ
+============================= */
+.patient-selected-display {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--blue-primary);
+  border-radius: 8px;
+}
+
+.patient-selected-display label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.patient-badge {
+  background-color: var(--blue-primary);
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* =============================
+   BOUTON CONSULTÉS
+============================= */
+.visit-toggle-btn.consulted-btn {
+  background-color: #059669;
+  border-color: #059669;
+}
+
+.visit-toggle-btn.consulted-btn:hover {
+  background-color: #10b981;
+  border-color: #10b981;
+}
+
+.visit-toggle-btn.consulted-btn.active {
+  background-color: #10b981;
+  border-color: #10b981;
+}
+
+/* =============================
+   HISTORIQUE DES CONSULTATIONS
+============================= */
+.consultations-history {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.consultations-history h3 {
+  color: var(--blue-light);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.consultations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.consultation-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.consultation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.consultation-date {
+  color: var(--blue-light);
+  font-weight: 600;
+}
+
+.consultation-doctor {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.consultation-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.consultation-field {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.field-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+  min-width: 100px;
+}
+
+.field-value {
+  color: var(--text-primary);
+  flex: 1;
+}
+
+/* =============================
+   BOUTON TEST
+============================= */
+.test-btn {
+  background-color: #059669;
+  margin-top: 1rem;
+}
+
+.test-btn:hover {
+  background-color: #10b981;
+}
+
+/* =============================
+   FORMULAIRE LABO (MODAL)
+============================= */
+.lab-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.lab-form-container {
+  background-color: var(--bg-card);
+  padding: 2rem;
+  border-radius: 14px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.lab-form-container h2 {
+  color: var(--blue-light);
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+}
+
+.lab-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.lab-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lab-form .form-group.full-width {
+  width: 100%;
+}
+
+.lab-form label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.lab-form input,
+.lab-form textarea {
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lab-form input:focus,
+.lab-form textarea:focus {
+  border-color: var(--blue-light);
+  box-shadow: 0 0 0 2px rgba(78,168,222,0.15);
+}
+
+.lab-form input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.lab-form textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cancel-btn {
+  background-color: #6b7280;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background-color: #9ca3af;
+}
+
+.submit-btn {
+  background-color: var(--blue-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: var(--blue-light);
+}

@@ -6,7 +6,10 @@ import api from "../api/axios";
 import AuthContext from "../context/AuthContext";
 
 const Pharmacy = () => {
-  const { token } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
+  
+  const isDoctor = user?.role === 'doctor';
+  const isAdmin = user?.role === 'admin';
   
   // 💊 Liste des médicaments
   const [medications, setMedications] = useState([]);
@@ -248,30 +251,39 @@ const Pharmacy = () => {
         <div className="pharmacy-header">
           <h1>Pharmacie</h1>
         </div>
+
+        {/* Notice lecture seule pour les docteurs */}
+        {isDoctor && (
+          <div className="read-only-notice">
+            <span>🔒 Mode lecture seule - Vous pouvez uniquement consulter les médicaments en stock</span>
+          </div>
+        )}
         
         {/* Section Médicaments */}
         <div className="pharmacy-section">
           <div className="section-header">
             <h2>Médicaments</h2>
-            <button 
-              className="add-btn"
-              onClick={() => {
-                setShowMedicationForm(!showMedicationForm);
-                setEditMedicationId(null);
-                setMedicationForm({
-                  name: "",
-                  description: "",
-                  stock_quantity: 0,
-                  unit_price: "",
-                  expiry_date: "",
-                });
-              }}
-            >
-              {showMedicationForm ? "Annuler" : "+ Ajouter un médicament"}
-            </button>
+            {!isDoctor && (
+              <button 
+                className="add-btn"
+                onClick={() => {
+                  setShowMedicationForm(!showMedicationForm);
+                  setEditMedicationId(null);
+                  setMedicationForm({
+                    name: "",
+                    description: "",
+                    stock_quantity: 0,
+                    unit_price: "",
+                    expiry_date: "",
+                  });
+                }}
+              >
+                {showMedicationForm ? "Annuler" : "+ Ajouter un médicament"}
+              </button>
+            )}
           </div>
           
-          {showMedicationForm && (
+          {showMedicationForm && !isDoctor && (
             <div className="form-container">
               <form className="pharmacy-form" onSubmit={handleMedicationSubmit}>
                 <div className="form-group">
@@ -361,20 +373,22 @@ const Pharmacy = () => {
                     <span className="medication-card-value">{medication.expiry_date}</span>
                   </div>
                 </div>
-                <div className="medication-card-actions">
-                  <button 
-                    className="edit-btn"
-                    onClick={() => handleEditMedication(medication)}
-                  >
-                    Modifier
-                  </button>
-                  <button 
-                    className="delete-btn"
-                    onClick={() => handleDeleteMedication(medication.id)}
-                  >
-                    Supprimer
-                  </button>
-                </div>
+                {!isDoctor && (
+                  <div className="medication-card-actions">
+                    <button 
+                      className="edit-btn"
+                      onClick={() => handleEditMedication(medication)}
+                    >
+                      Modifier
+                    </button>
+                    <button 
+                      className="delete-btn"
+                      onClick={() => handleDeleteMedication(medication.id)}
+                    >
+                      Supprimer
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -383,140 +397,144 @@ const Pharmacy = () => {
             <div className="no-data">
               <span className="no-data-icon">💊</span>
               <p>Aucun médicament trouvé</p>
-              <p className="no-data-subtitle">Cliquez sur "Ajouter un médicament" pour commencer</p>
+              {!isDoctor && (
+                <p className="no-data-subtitle">Cliquez sur "Ajouter un médicament" pour commencer</p>
+              )}
             </div>
           )}
         </div>
         
-        {/* Section Dispensations */}
-        <div className="pharmacy-section">
-          <div className="section-header">
-            <h2>Dispensations</h2>
-            <button 
-              className="add-btn"
-              onClick={() => {
-                setShowDispensationForm(!showDispensationForm);
-                setEditDispensationId(null);
-                setDispensationForm({
-                  prescription: "",
-                  medication: "",
-                  quantity: 1,
-                });
-              }}
-            >
-              {showDispensationForm ? "Annuler" : "+ Nouvelle dispensation"}
-            </button>
-          </div>
-          
-          {showDispensationForm && (
-            <div className="form-container">
-              <form className="pharmacy-form" onSubmit={handleDispensationSubmit}>
-                <div className="form-group">
-                  <label>Prescription:</label>
-                  <select
-                    name="prescription"
-                    value={dispensationForm.prescription}
-                    onChange={handleDispensationChange}
-                    required
-                  >
-                    <option value="">Sélectionner une prescription</option>
-                    {prescriptions.map((prescription) => (
-                      <option key={prescription.id} value={prescription.id}>
-                        Prescription #{prescription.id} - {prescription.patient}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Médicament:</label>
-                  <select
-                    name="medication"
-                    value={dispensationForm.medication}
-                    onChange={handleDispensationChange}
-                    required
-                  >
-                    <option value="">Sélectionner un médicament</option>
-                    {medications.map((medication) => (
-                      <option key={medication.id} value={medication.id}>
-                        {medication.name} (Stock: {medication.stock_quantity})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Quantité:</label>
-                  <input
-                    type="number"
-                    name="quantity"
-                    value={dispensationForm.quantity}
-                    onChange={handleDispensationChange}
-                    min="1"
-                    required
-                  />
-                </div>
-                <div className="form-actions">
-                  <button type="submit" className="submit-btn">
-                    {editDispensationId ? "Modifier" : "Enregistrer"}
-                  </button>
-                </div>
-              </form>
+        {/* Section Dispensations - Cachée pour les docteurs */}
+        {!isDoctor && (
+          <div className="pharmacy-section">
+            <div className="section-header">
+              <h2>Dispensations</h2>
+              <button 
+                className="add-btn"
+                onClick={() => {
+                  setShowDispensationForm(!showDispensationForm);
+                  setEditDispensationId(null);
+                  setDispensationForm({
+                    prescription: "",
+                    medication: "",
+                    quantity: 1,
+                  });
+                }}
+              >
+                {showDispensationForm ? "Annuler" : "+ Nouvelle dispensation"}
+              </button>
             </div>
-          )}
-          
-          {/* Cartes des dispensations */}
-          <div className="dispensation-cards-container">
-            {dispensations.map((dispensation) => (
-              <div className="dispensation-card" key={dispensation.id}>
-                <div className="dispensation-card-header">
-                  <span className="dispensation-card-icon">📋</span>
-                  <h3>Dispensation #{dispensation.id}</h3>
-                </div>
-                <div className="dispensation-card-body">
-                  <div className="dispensation-card-info">
-                    <span className="dispensation-card-label">Prescription:</span>
-                    <span className="dispensation-card-value">#{dispensation.prescription}</span>
+            
+            {showDispensationForm && (
+              <div className="form-container">
+                <form className="pharmacy-form" onSubmit={handleDispensationSubmit}>
+                  <div className="form-group">
+                    <label>Prescription:</label>
+                    <select
+                      name="prescription"
+                      value={dispensationForm.prescription}
+                      onChange={handleDispensationChange}
+                      required
+                    >
+                      <option value="">Sélectionner une prescription</option>
+                      {prescriptions.map((prescription) => (
+                        <option key={prescription.id} value={prescription.id}>
+                          Prescription #{prescription.id} - {prescription.patient}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                  <div className="dispensation-card-info">
-                    <span className="dispensation-card-label">Médicament:</span>
-                    <span className="dispensation-card-value">
-                      {dispensation.medication_name || dispensation.medication}
-                    </span>
+                  <div className="form-group">
+                    <label>Médicament:</label>
+                    <select
+                      name="medication"
+                      value={dispensationForm.medication}
+                      onChange={handleDispensationChange}
+                      required
+                    >
+                      <option value="">Sélectionner un médicament</option>
+                      {medications.map((medication) => (
+                        <option key={medication.id} value={medication.id}>
+                          {medication.name} (Stock: {medication.stock_quantity})
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                  <div className="dispensation-card-info">
-                    <span className="dispensation-card-label">Quantité:</span>
-                    <span className="dispensation-card-value">{dispensation.quantity}</span>
+                  <div className="form-group">
+                    <label>Quantité:</label>
+                    <input
+                      type="number"
+                      name="quantity"
+                      value={dispensationForm.quantity}
+                      onChange={handleDispensationChange}
+                      min="1"
+                      required
+                    />
                   </div>
-                  <div className="dispensation-card-info">
-                    <span className="dispensation-card-label">Date:</span>
-                    <span className="dispensation-card-value">{dispensation.dispensed_at}</span>
+                  <div className="form-actions">
+                    <button type="submit" className="submit-btn">
+                      {editDispensationId ? "Modifier" : "Enregistrer"}
+                    </button>
                   </div>
-                </div>
-                <div className="dispensation-card-actions">
-                  <button 
-                    className="edit-btn"
-                    onClick={() => handleEditDispensation(dispensation)}
-                  >
-                    Modifier
-                  </button>
-                  <button 
-                    className="delete-btn"
-                    onClick={() => handleDeleteDispensation(dispensation.id)}
-                  >
-                    Supprimer
-                  </button>
-                </div>
+                </form>
               </div>
-            ))}
-          </div>
-          
-          {dispensations.length === 0 && (
-            <div className="no-data">
-              <span className="no-data-icon">📋</span>
-              <p>Aucune dispensation trouvée</p>
-              <p className="no-data-subtitle">Cliquez sur "Nouvelle dispensation" pour commencer</p>
+            )}
+            
+            {/* Cartes des dispensations */}
+            <div className="dispensation-cards-container">
+              {dispensations.map((dispensation) => (
+                <div className="dispensation-card" key={dispensation.id}>
+                  <div className="dispensation-card-header">
+                    <span className="dispensation-card-icon">📋</span>
+                    <h3>Dispensation #{dispensation.id}</h3>
+                  </div>
+                  <div className="dispensation-card-body">
+                    <div className="dispensation-card-info">
+                      <span className="dispensation-card-label">Prescription:</span>
+                      <span className="dispensation-card-value">#{dispensation.prescription}</span>
+                    </div>
+                    <div className="dispensation-card-info">
+                      <span className="dispensation-card-label">Médicament:</span>
+                      <span className="dispensation-card-value">
+                        {dispensation.medication_name || dispensation.medication}
+                      </span>
+                    </div>
+                    <div className="dispensation-card-info">
+                      <span className="dispensation-card-label">Quantité:</span>
+                      <span className="dispensation-card-value">{dispensation.quantity}</span>
+                    </div>
+                    <div className="dispensation-card-info">
+                      <span className="dispensation-card-label">Date:</span>
+                      <span className="dispensation-card-value">{dispensation.dispensed_at}</span>
+                    </div>
+                  </div>
+                  <div className="dispensation-card-actions">
+                    <button 
+                      className="edit-btn"
+                      onClick={() => handleEditDispensation(dispensation)}
+                    >
+                      Modifier
+                    </button>
+                    <button 
+                      className="delete-btn"
+                      onClick={() => handleDeleteDispensation(dispensation.id)}
+                    >
+                      Supprimer
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-          )}
-        </div>
+            
+            {dispensations.length === 0 && (
+              <div className="no-data">
+                <span className="no-data-icon">📋</span>
+                <p>Aucune dispensation trouvée</p>
+                <p className="no-data-subtitle">Cliquez sur "Nouvelle dispensation" pour commencer</p>
+              </div>
+            )}
+          </div>
+        )}
     </div>
   );
 };

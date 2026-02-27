@@ -53,6 +53,9 @@ INSTALLED_APPS = [
     'billing',
     'reports',
     'corsheaders',
+    'services',
+    'hospitalisations',
+    'RoomTab',
 ]
 
 REST_FRAMEWORK = {
@@ -81,8 +84,8 @@ ROOT_URLCONF = 'backend.urls'
 
 # Autoriser uniquement ton frontend
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3001",  # ton frontend
-    "http://localhost:3000",  # ton frontend
+    "http://localhost:3001",  # mon frontend
+    "http://localhost:3000",  # mon frontend
 ]
 
 CORS_ALLOW_CREDENTIALS = True

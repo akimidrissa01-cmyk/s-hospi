@@ -26,3 +26,14 @@ class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+
+
+class DoctorListView(generics.ListAPIView):
+    """
+    Liste des médecins (utilisateurs avec role='doctor' ou 'admin')
+    """
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return User.objects.filter(role__in=['doctor', 'admin'])

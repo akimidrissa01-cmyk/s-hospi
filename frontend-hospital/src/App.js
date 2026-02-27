@@ -8,6 +8,10 @@ import Prescriptions from "./pages/Prescriptions";
 import Laboratory from "./pages/Laboratory";
 import Pharmacy from "./pages/Pharmacy";
 import Billing from "./pages/Billing";
+import Reports from "./pages/Reports";
+import RoomTab from "./pages/RoomTab";
+import Hospitalisations from "./pages/Hospitalisations";
+import ServicesTab from "./pages/ServicesTab";
 
 /*
   Ce fichier définit toutes les routes
@@ -27,6 +31,11 @@ function App() {
           <Route path="/laboratory" element={<Laboratory />} />
           <Route path="/pharmacy" element={<Pharmacy />} />
           <Route path="/billing" element={<Billing />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/roomtab" element={<RoomTab />} />
+          <Route path="/hospitalisations" element={<Hospitalisations />} />
+          <Route path="/serviceTab" element={<ServicesTab />} />
+
         </Routes>
       </AuthProvider>
     </BrowserRouter>

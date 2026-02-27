@@ -1,7 +1,20 @@
+:root {
+  --bg-primary: #121212;
+  --bg-secondary: #181818;
+  --bg-card: #1e1e2f;
+  --blue-primary: #2563eb;
+  --blue-light: #4ea8de;
+  --text-primary: #ffffff;
+  --text-secondary: #c0c0c0;
+  --border-color: #2a2a2a;
+}
+
 .billing-content {
-  padding: 20px;
-  margin-left: 250px;
-  margin-top: 60px;
+  margin-left: 220px;
+  padding: 2.9rem;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  transition: background-color 0.3s ease;
 }
 
 .billing-content h1 {
@@ -40,10 +53,12 @@
 }
 
 .tab-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-card);
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
 .section-header {
@@ -148,7 +163,10 @@
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  background-color: var(--bg-card);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
 .data-table thead {

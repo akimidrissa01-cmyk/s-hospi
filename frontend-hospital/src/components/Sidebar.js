@@ -31,8 +31,12 @@ const Sidebar = () => {
         <NavLink to="/reports" className="sidebar-link">
           Reports
         </NavLink>
-        
-
+        <NavLink to="/hospitalisations" className="sidebar-link">
+          Hospitalisations
+        </NavLink>
+        <NavLink to="/roomtab" className="sidebar-link">
+          Chambres
+        </NavLink>
       </nav>
     </aside>
   );

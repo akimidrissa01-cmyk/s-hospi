@@ -1,9 +1,9 @@
 :root {
-  --bg-primary: #121212; /* fond principal noir */
-  --bg-card: #1e1e2f; /* fond des cartes légèrement plus clair */
-  --blue-light: #4ea8de; /* accent bleu clair */
-  --text-primary: #ffffff; /* texte principal blanc */
-  --text-secondary: #c0c0c0; /* texte secondaire gris clair */
+  --bg-primary: #121212;
+  --bg-card: #1e1e2f;
+  --blue-light: #4ea8de;
+  --text-primary: #ffffff;
+  --text-secondary: #c0c0c0;
   --shadow-card: rgba(0, 0, 0, 0.5);
 }
 
@@ -16,7 +16,7 @@ body {
 
 .dashboard-content {
   margin-left: 220px;
-  padding: 2.5rem;
+  padding: 2.9rem;
   min-height: 100vh;
   background-color: var(--bg-primary);
   transition: background-color 0.3s ease;
@@ -29,12 +29,53 @@ body {
   font-weight: 600;
 }
 
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  margin-bottom: 0;
+}
+
+/* Period Selector */
+.period-selector {
+  display: flex;
+  gap: 0.5rem;
+  background-color: var(--bg-card);
+  padding: 0.3rem;
+  border-radius: 8px;
+}
+
+.period-selector button {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.period-selector button:hover {
+  background-color: rgba(78, 168, 222, 0.1);
+}
+
+.period-selector button.active {
+  background-color: var(--blue-light);
+  color: var(--bg-primary);
+  font-weight: 600;
+}
+
+/* Cards */
 .cards-container {
   display: flex;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 2rem;
   flex-wrap: wrap;
-  justify-content: fl;
+  margin-bottom: 2rem;
 }
 
 .card {
@@ -43,6 +84,8 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 12px var(--shadow-card);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  flex: 1;
+  min-width: 200px;
 }
 
 .card:hover {
@@ -62,9 +105,176 @@ body {
   color: var(--blue-light);
 }
 
-/* messages d'erreur */
+/* Billing Summary */
+.billing-summary {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.billing-card {
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-card);
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+  border-left: 4px solid var(--blue-light);
+}
+
+.billing-card.paid {
+  border-left-color: #2ecc71;
+}
+
+.billing-card.pending {
+  border-left-color: #f39c12;
+}
+
+.billing-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.billing-amount {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Charts */
+.charts-row {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.chart-container {
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-card);
+  flex: 1;
+  min-width: 400px;
+}
+
+.chart-container h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+}
+
+/* History Table */
+.history-section {
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-card);
+}
+
+.history-section h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+}
+
+.history-table-container {
+  overflow-x: auto;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table th,
+.history-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.history-table th {
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.history-table td {
+  color: var(--text-primary);
+}
+
+.history-table tr:hover {
+  background-color: rgba(78, 168, 222, 0.05);
+}
+
+.activity-type {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+
+.date-cell {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Error */
 .error {
   color: #ff4c4c;
   font-weight: 500;
   margin-top: 1rem;
+}
+
+/* Loading */
+.loading {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/* No Activities */
+.no-activities {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .cards-container {
+    flex-direction: column;
+  }
+
+  .charts-row {
+    flex-direction: column;
+  }
+
+  .chart-container {
+    min-width: 100%;
+  }
+
+  .billing-summary {
+    flex-direction: column;
+  }
 }

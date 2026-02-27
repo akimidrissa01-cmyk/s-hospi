@@ -1,14 +1,14 @@
-# TODO - Change Theme to Black and Blue
+# TODO - Historique et Graphiques Dashboard
 
-## Task: Change pages from dark blue/slate to black with blue accents
+## Backend (Django)
+- [x] `reports/views.py` - Créer endpoint dashboard-stats
+- [x] `reports/urls.py` - Ajouter route /dashboard-stats/
 
-### CSS Files to Update:
+## Frontend (React)
+- [x] `package.json` - Ajouter dépendance recharts
+- [x] `Dashboard.js` - Ajouter graphiques et historique
+- [x] `Dashboard.css` - Ajouter styles
 
-- [x] 1. Update index.css - Change CSS variables to black backgrounds
-- [x] 2. Update Card.css - Change hardcoded white to black with blue
-- [x] 3. Update login.css - Change light gradient to black theme
-
-### Progress:
-- [x] index.css - CSS variables
-- [x] Card.css - Card component
-- [x] login.css - Login page
+## Tests
+- [ ] Tester l'API backend
+- [ ] Vérifier l'affichage des graphiques
