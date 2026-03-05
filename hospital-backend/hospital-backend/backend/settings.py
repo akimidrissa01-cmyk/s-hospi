@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',        # pour accéder via localhost
     '127.0.0.1',        # pour accéder via IP locale
-    '0.0.0.0',          # si tu veux que le serveur soit accessible depuis le réseau local
+    '192.168.200.68',          # si tu veux que le serveur soit accessible depuis le réseau local
 ]
 
 
@@ -154,6 +155,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 AUTH_USER_MODEL = 'accounts.User'
 

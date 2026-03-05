@@ -160,6 +160,29 @@ class VisitInProgressListView(generics.ListAPIView):
         return Visit.objects.none()
 
 
+class DoctorAssignedVisitsView(generics.ListAPIView):
+    """
+    Retourne la liste des visites en cours attribuées au médecin connecté,
+    ordonnées par date d'ajout (les plus anciennes en premier).
+    """
+    serializer_class = VisitSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.role.upper() in ['DOCTOR', 'ADMIN']:
+            # For doctors, return only visits assigned to them
+            # For admin, return all in-progress visits
+            if user.role.upper() == 'DOCTOR':
+                return Visit.objects.filter(
+                    doctor=user,
+                    status='in_progress'
+                ).order_by('visit_date')
+            else:
+                return Visit.objects.filter(status='in_progress').order_by('visit_date')
+        return Visit.objects.none()
+
+
 class ConsultedPatientsListView(generics.ListAPIView):
     """
     Retourne la liste des patients consultés (avec consultations),
