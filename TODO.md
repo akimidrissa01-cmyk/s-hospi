@@ -1,14 +1,11 @@
-# TODO - Historique et Graphiques Dashboard
+# TODO - Médecins en ligne pour les consultations
 
-## Backend (Django)
-- [x] `reports/views.py` - Créer endpoint dashboard-stats
-- [x] `reports/urls.py` - Ajouter route /dashboard-stats/
+## Backend
+- [x] 1. Ajouter champ `is_online` au modèle User (accounts/models.py)
+- [x] 2. Mettre à jour le serializer User pour inclure `is_online` (accounts/serializers.py)
+- [x] 3. Ajouter endpoint pour récupérer les médecins en ligne (accounts/views.py)
+- [x] 4. Créer et appliquer la migration
 
-## Frontend (React)
-- [x] `package.json` - Ajouter dépendance recharts
-- [x] `Dashboard.js` - Ajouter graphiques et historique
-- [x] `Dashboard.css` - Ajouter styles
+## Frontend
+- [x] 5. Modifier Consultations.js pour afficher uniquement les médecins en ligne
 
-## Tests
-- [ ] Tester l'API backend
-- [ ] Vérifier l'affichage des graphiques

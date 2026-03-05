@@ -2,32 +2,21 @@
    VARIABLES GLOBALES
 ============================= */
 :root {
-  --bg-primary: #0f0f14;
-  --bg-secondary: #18181f;
-  --bg-card: #1e1e2a;
-  --bg-hover: #252532;
-  --blue-primary: #3b82f6;
-  --blue-light: #60a5fa;
-  --blue-dark: #1d4ed8;
+  --bg-primary: #121212;
+  --bg-secondary: #181818;
+  --bg-card: #1e1e2f;
+  --blue-primary: #2563eb;
+  --blue-light: #4ea8de;
   --green-success: #10b981;
   --green-light: #34d399;
   --amber-warning: #f59e0b;
   --amber-light: #fbbf24;
   --red-danger: #ef4444;
   --red-light: #f87171;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
+  --text-primary: #ffffff;
+  --text-secondary: #c0c0c0;
   --text-muted: #64748b;
-  --border-color: #2e2e3a;
-  --border-light: #3f3f50;
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-full: 50px;
-  --transition: all 0.25s ease;
+  --border-color: #2a2a2a;
 }
 
 /* =============================
@@ -35,36 +24,18 @@
 ============================= */
 .patients-container {
   margin-left: 220px;
-  padding: 2.9rem;
+  padding: 2.5rem;
   min-height: 100vh;
   background-color: var(--bg-primary);
-  transition: background-color 0.3s ease;
-}
-
-/* =============================
-   HEADER
-============================= */
-.patients-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 1.8rem;
 }
 
 .patients-container h1 {
-  color: var(--text-primary);
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.patients-container h1::before {
-  content: "🏥";
-  font-size: 1.5rem;
+  color: var(--blue-light);
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 /* =============================
@@ -75,7 +46,7 @@
   gap: 0.5rem;
   background: var(--bg-secondary);
   padding: 0.35rem;
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   width: fit-content;
 }
 
@@ -83,23 +54,22 @@
   padding: 0.6rem 1.25rem;
   background-color: transparent;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   color: var(--text-secondary);
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.25s ease;
 }
 
 .tab:hover {
   color: var(--text-primary);
-  background-color: var(--bg-hover);
+  background-color: var(--bg-card);
 }
 
 .tab.active {
   background-color: var(--blue-primary);
   color: white;
-  box-shadow: var(--shadow-sm);
 }
 
 /* =============================
@@ -111,105 +81,75 @@
 }
 
 .fab {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--blue-primary), var(--blue-dark));
-  color: rgb(87, 61, 61);
-  font-size: 1.75rem;
-  font-weight: 300;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--blue-primary);
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: bold;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: var(--transition);
-  box-shadow: var(--shadow-md);
+  transition: transform 0.2s, background-color 0.2s;
 }
 
 .fab:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 12px 28px rgba(59, 130, 246, 0.4);
-}
-
-.fab:active {
-  transform: translateY(-1px) scale(1.02);
+  background-color: var(--blue-light);
+  transform: scale(1.08);
 }
 
 /* =============================
-   FORMULAIRE MODERNE
+   FORMULAIRE
 ============================= */
 .form-container {
-  background: linear-gradient(145deg, var(--bg-card), var(--bg-secondary));
-  padding: 2rem;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border-color);
-  animation: slideDown 0.3s ease-out;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  background-color: var(--bg-card);
+  padding: 1.8rem 2rem;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
 .form-container h2 {
-  color: var(--text-primary);
-  font-size: 1.25rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  color: var(--blue-light);
+  font-size: 1.3rem;
+  margin-bottom: 1.4rem;
 }
 
-.form-container h2::before {
-  content: "📝";
-  font-size: 1.1rem;
-}
-
-/* Grille */
 .patient-form {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.25rem 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem 1.8rem;
 }
 
-/* Champs avec style moderne */
-.patient-form input,
-.patient-form select,
-.patient-form textarea {
-  padding: 0.75rem 1rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-size: 0.9rem;
+/* ===== Correction formulaire sombre ===== */
+
+.patients-container input,
+.patients-container select,
+.patients-container textarea {
+
+  background-color: #1e1e2f !important;
+  color: #ffffff !important;
+
+  border: 1px solid #2a2a2a !important;
+}
+
+.patients-container input::placeholder,
+.patients-container textarea::placeholder {
+  color: #9ca3af;
+}
+
+.patients-container input:focus,
+.patients-container select:focus,
+.patients-container textarea:focus {
+
   outline: none;
-  transition: var(--transition);
-  width: 100%;
+  border-color: #4ea8de !important;
+
+  box-shadow: 0 0 0 2px rgba(78,168,222,0.15);
 }
 
-.patient-form input::placeholder {
-  color: var(--text-muted);
-}
-
-.patient-form input:focus,
-.patient-form select:focus,
-.patient-form textarea:focus {
-  border-color: var(--blue-primary);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-  background-color: var(--bg-secondary);
-}
-
-/* Labels flottants */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -224,23 +164,20 @@
   letter-spacing: 0.5px;
 }
 
-/* Textarea */
 .patient-form textarea {
   grid-column: 1 / -1;
   resize: vertical;
-  min-height: 80px;
-  max-height: 140px;
-  line-height: 1.5;
+  min-height: 70px;
+  max-height: 120px;
+  line-height: 1.4;
 }
 
-/* Responsive */
 @media (max-width: 900px) {
   .patient-form textarea {
     grid-column: span 1;
   }
 }
 
-/* Boutons du formulaire */
 .form-buttons {
   grid-column: 1 / -1;
   display: flex;
@@ -253,23 +190,28 @@
 
 .form-buttons button {
   padding: 0.7rem 1.5rem;
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.25s ease;
 }
 
 .form-buttons .edit-btn {
-  background: linear-gradient(135deg, var(--blue-primary), var(--blue-dark));
+  background-color: var(--blue-primary);
   color: white;
   border: none;
 }
 
-.form-buttons .edit-btn:hover {
-  background: linear-gradient(135deg, var(--blue-light), var(--blue-primary));
+.form-buttons .edit-btn:hover:not(:disabled) {
+  background-color: var(--blue-light);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.form-buttons .edit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
 }
 
 .form-buttons .cancel-btn {
@@ -279,38 +221,34 @@
 }
 
 .form-buttons .cancel-btn:hover {
-  background-color: var(--bg-hover);
+  background-color: var(--bg-card);
   color: var(--text-primary);
 }
 
 /* =============================
-   TABLEAU MODERNE
+   TABLEAU
 ============================= */
 .table-wrapper {
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-  border: 1px solid var(--border-color);
-}
-
-.patients-table {
-  width: 100%;
-  border-collapse: collapse;
   background-color: var(--bg-card);
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
+.patients-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-card);
+}
+
 .patients-table thead {
-  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-hover));
+  background-color: var(--bg-secondary);
 }
 
 .patients-table th {
-  padding: 1rem 1.25rem;
+  padding: 0.75rem 1rem;
   text-align: left;
-  color: var(--text-secondary);
+  color: var(--blue-light);
   font-weight: 600;
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -319,18 +257,18 @@
 }
 
 .patients-table td {
-  padding: 1rem 1.25rem;
+  padding: 0.75rem 1rem;
   color: var(--text-primary);
   border-bottom: 1px solid var(--border-color);
   font-size: 0.9rem;
 }
 
 .patients-table tbody tr {
-  transition: var(--transition);
+  transition: all 0.25s ease;
 }
 
 .patients-table tbody tr:hover {
-  background-color: var(--bg-hover);
+  background-color: rgba(78,168,222,0.05);
 }
 
 .patients-table tbody tr:last-child td {
@@ -338,13 +276,13 @@
 }
 
 /* =============================
-   BADGES MODERNES
+   BADGES
 ============================= */
 .status {
   display: inline-flex;
   align-items: center;
   padding: 0.35rem 0.85rem;
-  border-radius: var(--radius-full);
+  border-radius: 50px;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: capitalize;
@@ -395,17 +333,17 @@
 
 .patients-table td .edit-btn,
 .patients-table td .delete-btn {
-  padding: 0.45rem 0.85rem;
-  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.25s ease;
   border: none;
 }
 
 .edit-btn {
-  background-color: rgba(59, 130, 246, 0.15);
+  background-color: rgba(59, 130,246,0.15);
   color: var(--blue-light);
 }
 
@@ -416,7 +354,7 @@
 }
 
 .delete-btn {
-  background-color: rgba(239, 68, 68, 0.15);
+  background-color: rgba(239,68,68,0.15);
   color: var(--red-light);
 }
 
@@ -433,14 +371,13 @@
   color: var(--blue-light);
   cursor: pointer;
   font-weight: 500;
-  transition: var(--transition);
+  transition: all 0.25s ease;
   padding: 0.25rem 0.5rem;
-  border-radius: var(--radius-sm);
+  border-radius: 6px;
 }
 
 .patient-link:hover {
-  color: rgb(173, 134, 134);
-  background-color: rgba(59, 130, 246, 0.2);
+  background-color: rgba(59,130,246,0.2);
 }
 
 /* =============================
@@ -448,20 +385,20 @@
 ============================= */
 .status-select {
   padding: 0.45rem 0.75rem;
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   border: 1px solid var(--border-color);
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-size: 0.85rem;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.25s ease;
   min-width: 120px;
 }
 
 .status-select:focus {
   border-color: var(--blue-primary);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
 }
 
 .status-select option {
@@ -485,16 +422,15 @@
   overflow-y: auto;
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   z-index: 100;
-  box-shadow: var(--shadow-lg);
-  animation: slideDown 0.2s ease-out;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
 .service-option {
   padding: 0.75rem 1rem;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.25s ease;
   border-bottom: 1px solid var(--border-color);
   color: var(--text-primary);
 }
@@ -508,8 +444,8 @@
   color: white;
 }
 
-/* ============================= MOD
-   MODALERNE
+/* =============================
+   MODAL
 ============================= */
 .modal-overlay {
   position: fixed;
@@ -517,45 +453,25 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.7);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  animation: fadeIn 0.25s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
 
 .modal-content {
-  background: linear-gradient(145deg, var(--bg-card), var(--bg-secondary));
+  background-color: var(--bg-card);
   padding: 2rem;
-  border-radius: var(--radius-lg);
+  border-radius: 14px;
   width: 450px;
   max-width: 92%;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  border: 1px solid var(--border-color);
-  animation: scaleIn 0.3s ease-out;
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
 
 .modal-content h2 {
+  color: var(--blue-light);
   font-size: 1.15rem;
-  color: var(--text-primary);
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--border-color);
@@ -574,14 +490,14 @@
   gap: 14px;
   padding: 12px 16px;
   background-color: var(--bg-primary);
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.25s ease;
   border: 1px solid var(--border-color);
 }
 
 .service-item:hover {
-  background-color: var(--bg-hover);
+  background-color: var(--bg-card);
   border-color: var(--blue-primary);
   transform: translateX(4px);
 }
@@ -609,20 +525,19 @@
 .modal-close-btn {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(135deg, var(--blue-primary), var(--blue-dark));
+  background-color: var(--blue-primary);
   color: white;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.25s ease;
 }
 
 .modal-close-btn:hover {
-  background: linear-gradient(135deg, var(--blue-light), var(--blue-primary));
+  background-color: var(--blue-light);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 /* =============================
@@ -635,7 +550,7 @@
   color: white;
   font-size: 0.75rem;
   font-weight: 600;
-  border-radius: var(--radius-full);
+  border-radius: 50px;
   margin-left: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -645,11 +560,11 @@
    INTERNE NOTICE
 ============================= */
 .interne-notice {
-  background-color: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background-color: rgba(16,185,129,0.1);
+  border: 1px solid rgba(16,185,129,0.3);
   color: var(--green-light);
   padding: 0.75rem 1rem;
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   font-size: 0.85rem;
   margin-bottom: 1.5rem;
   text-align: center;
@@ -657,16 +572,186 @@
 }
 
 /* =============================
-   ANIMATIONS
+   WARNING BANNER
 ============================= */
+.warning-banner {
+  background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05));
+  border: 1px solid rgba(239,68,68,0.3);
+  color: #f87171;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+}
+
+.warning-banner::before {
+  content: "⚠️";
+  font-size: 1.1rem;
+}
+
+/* =============================
+   DOCTOR SELECT BUTTON
+============================= */
+.doctor-select-container {
+  position: relative;
+}
+
+.doctor-select-btn {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: #121212;
+  color: #ffffff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.25s ease;
+}
+
+.doctor-select-btn:hover:not(:disabled) {
+  border-color: var(--blue-light);
+  box-shadow: 0 0 0 2px rgba(78,168,222,0.15);
+}
+
+.doctor-select-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.doctor-select-btn.placeholder {
+  color: var(--text-muted);
+}
+
+.doctor-select-btn.online {
+  border-color: var(--green-success);
+  background-color: rgba(16,185,129,0.1);
+}
+
+.selected-doctor {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.placeholder-text {
+  color: var(--text-muted);
+}
+
+.dropdown-arrow {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-dot.online {
+  background-color: var(--green-success);
+  box-shadow: 0 0 8px rgba(16,185,129,0.6);
+  animation: pulse 2s infinite;
+}
+
+.status-dot.offline {
+  background-color: var(--red-danger);
+}
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
 }
 
-.loading {
-  animation: pulse 1.5s infinite;
+/* =============================
+   DOCTOR DROPDOWN
+============================= */
+.doctor-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  z-index: 100;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.doctor-option {
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.doctor-option:last-child {
+  border-bottom: none;
+}
+
+.doctor-option:hover {
+  background-color: var(--bg-card);
+}
+
+.doctor-option.selected {
+  background-color: rgba(59,130,246,0.15);
+  border-left: 3px solid var(--blue-primary);
+}
+
+.doctor-option.offline {
+  opacity: 0.6;
+}
+
+.doctor-option.offline:hover {
+  cursor: not-allowed;
+}
+
+.doctor-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.doctor-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.doctor-status {
+  font-size: 0.75rem;
   color: var(--text-secondary);
+}
+
+.doctor-option.online .doctor-status {
+  color: var(--green-success);
+}
+
+.doctor-option.offline .doctor-status {
+  color: var(--text-muted);
+}
+
+.offline-badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  background-color: rgba(239,68,68,0.15);
+  color: var(--red-light);
+  border-radius: 50px;
+  font-weight: 600;
 }
 
 /* =============================
@@ -679,11 +764,6 @@
     padding-top: 5rem;
   }
 
-  .patients-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
   .patients-table th,
   .patients-table td {
     padding: 0.75rem;
@@ -694,3 +774,4 @@
     padding: 1.5rem;
   }
 }
+

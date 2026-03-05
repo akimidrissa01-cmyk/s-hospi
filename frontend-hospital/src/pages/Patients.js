@@ -17,9 +17,11 @@ const Patients = () => {
   const [patients, setPatients] = useState([]);
   const [visits, setVisits] = useState([]);
   const [doctors, setDoctors] = useState([]);
+  const [allDoctors, setAllDoctors] = useState([]); // All doctors with online status
   const [services, setServices] = useState([]);
   const [serviceSearch, setServiceSearch] = useState("");
   const [showServiceDropdown, setShowServiceDropdown] = useState(false);
+  const [showDoctorDropdown, setShowDoctorDropdown] = useState(false);
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -71,10 +73,12 @@ const Patients = () => {
     }
   }, []);
 
+  // Fetch all doctors (including their online status)
   const fetchDoctors = useCallback(async () => {
     try {
       const res = await api.get("accounts/doctors/");
       setDoctors(res.data);
+      setAllDoctors(res.data);
     } catch (err) {
       console.error("Erreur médecins :", err);
     }
@@ -97,6 +101,35 @@ const Patients = () => {
       fetchServices();
     }
   }, [token, fetchPatients, fetchVisits, fetchDoctors, fetchServices]);
+
+  /* ================= HELPERS ================= */
+
+  // Get online doctors only
+  const getOnlineDoctors = () => {
+    return allDoctors.filter(d => d.is_online === true);
+  };
+
+  // Format last seen time
+  const formatLastSeen = (lastSeen) => {
+    if (!lastSeen) return "jamais";
+    
+    const date = new Date(lastSeen);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    
+    if (diffMins < 1) return "à l'instant";
+    if (diffMins < 60) return `il y a ${diffMins} min`;
+    if (diffHours < 24) return `il y a ${diffHours}h`;
+    return date.toLocaleDateString("fr-FR");
+  };
+
+  // Get selected doctor info
+  const getSelectedDoctor = () => {
+    if (!visitFormData.doctor) return null;
+    return allDoctors.find(d => d.id === parseInt(visitFormData.doctor));
+  };
 
   /* ================= PATIENT ================= */
 
@@ -149,6 +182,20 @@ const Patients = () => {
 
   const handleVisitSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate: Check if selected doctor is online
+    const selectedDoctor = getSelectedDoctor();
+    if (selectedDoctor && !selectedDoctor.is_online) {
+      alert("Le médecin sélectionné n'est pas en ligne. Veuillez choisir un autre médecin.");
+      return;
+    }
+
+    // Check if there are any online doctors
+    const onlineDoctors = getOnlineDoctors();
+    if (onlineDoctors.length === 0) {
+      alert("Aucun médecin n'est en ligne actuellement. Veuillez attendre qu'un médecin se connecte.");
+      return;
+    }
 
     try {
       const visitData = {
@@ -217,6 +264,19 @@ const Patients = () => {
     setVisitFormData({ ...visitFormData, patient: patientId });
   };
 
+  // Handle doctor selection from dropdown
+  const handleDoctorSelect = (doctor) => {
+    if (!doctor.is_online) {
+      alert("Ce médecin n'est pas en ligne. Veuillez choisir un médecin en ligne.");
+      return;
+    }
+    setVisitFormData({
+      ...visitFormData,
+      doctor: String(doctor.id),
+    });
+    setShowDoctorDropdown(false);
+  };
+
   const filteredServices = services.filter(
     (s) => s.service_type === visitFormData.visit_type
   );
@@ -273,6 +333,9 @@ const Patients = () => {
       console.error("Erreur mise à jour service :", err);
     }
   };
+
+  const onlineDoctorsCount = getOnlineDoctors().length;
+  const selectedDoctorInfo = getSelectedDoctor();
 
   return (
     <div>
@@ -448,6 +511,13 @@ const Patients = () => {
           <div className="form-container">
             <h2>Nouvelle visite</h2>
 
+            {/* Warning if no doctors online */}
+            {onlineDoctorsCount === 0 && (
+              <div className="warning-banner">
+                ⚠️ Aucun médecin n'est en ligne. Vous ne pouvez pas créer de visite pour le moment.
+              </div>
+            )}
+
             <form onSubmit={handleVisitSubmit} className="patient-form">
               <div className="form-group">
                 <label>Patient</label>
@@ -461,25 +531,51 @@ const Patients = () => {
                 </select>
               </div>
 
+              {/* Custom Doctor Selection Button */}
               <div className="form-group">
-                <label>Médecin</label>
-                <select
-                  value={visitFormData.doctor}
-                  onChange={(e) =>
-                    setVisitFormData({
-                      ...visitFormData,
-                      doctor: e.target.value,
-                    })
-                  }
-                  required
-                >
-                  <option value="">Sélectionner médecin</option>
-                  {doctors.map((d) => (
-                    <option key={d.id} value={d.id}>
-                      Dr {d.first_name} {d.last_name}
-                    </option>
-                  ))}
-                </select>
+                <label>Médecin {onlineDoctorsCount > 0 ? `(${onlineDoctorsCount} en ligne)` : ""}</label>
+                <div className="doctor-select-container">
+                  <button
+                    type="button"
+                    className={`doctor-select-btn ${selectedDoctorInfo?.is_online ? 'online' : ''} ${!selectedDoctorInfo ? 'placeholder' : ''}`}
+                    onClick={() => setShowDoctorDropdown(!showDoctorDropdown)}
+                    disabled={onlineDoctorsCount === 0}
+                  >
+                    {selectedDoctorInfo ? (
+                      <span className="selected-doctor">
+                        <span className={`status-dot ${selectedDoctorInfo.is_online ? 'online' : 'offline'}`}></span>
+                        Dr {selectedDoctorInfo.first_name} {selectedDoctorInfo.last_name}
+                      </span>
+                    ) : (
+                      <span className="placeholder-text">Sélectionner un médecin en ligne</span>
+                    )}
+                    <span className="dropdown-arrow">▼</span>
+                  </button>
+
+                  {showDoctorDropdown && (
+                    <div className="doctor-dropdown">
+                      {allDoctors.map((doctor) => (
+                        <div
+                          key={doctor.id}
+                          className={`doctor-option ${doctor.is_online ? 'online' : 'offline'} ${visitFormData.doctor === String(doctor.id) ? 'selected' : ''}`}
+                          onClick={() => handleDoctorSelect(doctor)}
+                        >
+                          <span className={`status-dot ${doctor.is_online ? 'online' : 'offline'}`}></span>
+                          <div className="doctor-info">
+                            <span className="doctor-name">Dr {doctor.first_name} {doctor.last_name}</span>
+                            <span className="doctor-status">
+                              {doctor.is_online 
+                                ? "En ligne" 
+                                : `Hors ligne - ${formatLastSeen(doctor.last_seen)}`
+                              }
+                            </span>
+                          </div>
+                          {!doctor.is_online && <span className="offline-badge">Indisponible</span>}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="form-group">
@@ -559,7 +655,12 @@ const Patients = () => {
                 >
                   Annuler
                 </button>
-                <button type="submit" className="edit-btn">
+                <button 
+                  type="submit" 
+                  className="edit-btn"
+                  disabled={onlineDoctorsCount === 0}
+                  title={onlineDoctorsCount === 0 ? "Aucun médecin en ligne" : ""}
+                >
                   Créer la visite
                 </button>
               </div>
@@ -770,3 +871,4 @@ const Patients = () => {
 };
   
 export default Patients;
+

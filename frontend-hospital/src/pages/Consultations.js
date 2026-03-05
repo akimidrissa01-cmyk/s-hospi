@@ -11,12 +11,14 @@ const Consultations = () => {
   const [consultations, setConsultations] = useState([]);
   const [patients, setPatients] = useState([]);
   const [doctors, setDoctors] = useState([]);
+  const [onlineDoctors, setOnlineDoctors] = useState([]);
   const [visits, setVisits] = useState([]);
   const [selectedVisit, setSelectedVisit] = useState(null);
 
   const [showForm, setShowForm] = useState(false);
   const [showVisits, setShowVisits] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [noOnlineDoctors, setNoOnlineDoctors] = useState(false);
 
   const [formData, setFormData] = useState({
     patient: "",
@@ -48,8 +50,23 @@ const Consultations = () => {
 
   const fetchDoctors = useCallback(async () => {
     try {
+      // Fetch only online doctors for the form
+      const res = await api.get("accounts/doctors/online/");
+      setDoctors(res.data);
+      // Check if there are no online doctors
+      setNoOnlineDoctors(res.data.length === 0);
+    } catch (err) {
+      console.error(err);
+      setDoctors([]);
+      setNoOnlineDoctors(true);
+    }
+  }, []);
+
+  // Fetch all doctors for displaying in the table (past consultations)
+  const fetchAllDoctors = useCallback(async () => {
+    try {
       const res = await api.get("accounts/");
-      setDoctors(res.data.filter(u => u.role === "doctor"));
+      setOnlineDoctors(res.data.filter(u => u.role === "doctor" || u.role === "admin"));
     } catch (err) {
       console.error(err);
     }
@@ -57,21 +74,29 @@ const Consultations = () => {
 
   const fetchVisitsInProgress = useCallback(async () => {
     try {
-      const res = await api.get("patients/visits/in-progress/");
-      setVisits(res.data);
+      // For doctors, fetch only their assigned visits
+      // For admin/nurse, fetch all in-progress visits
+      if (user?.role === 'doctor') {
+        const res = await api.get("patients/visits/my-visits/");
+        setVisits(res.data);
+      } else {
+        const res = await api.get("patients/visits/in-progress/");
+        setVisits(res.data);
+      }
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [user?.role]);
 
   useEffect(() => {
     if (token) {
       fetchConsultations();
       fetchPatients();
       fetchDoctors();
+      fetchAllDoctors();
       fetchVisitsInProgress();
     }
-  }, [token, fetchConsultations, fetchPatients, fetchDoctors, fetchVisitsInProgress]);
+  }, [token, fetchConsultations, fetchPatients, fetchDoctors, fetchAllDoctors, fetchVisitsInProgress]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -101,7 +126,9 @@ const Consultations = () => {
       setEditId(null);
       setShowForm(false);
       fetchConsultations();
-  } catch (err) {
+      // Refresh visits to update the list
+      fetchVisitsInProgress();
+    } catch (err) {
       const errorMsg = err.response?.data?.error || err.response?.data?.patient || "Erreur lors de la sauvegarde";
       alert(errorMsg);
       console.error("Erreur sauvegarde :", err.response?.data || err.message);
@@ -136,9 +163,12 @@ const Consultations = () => {
 
   // Handle "Consulter" button click from visits list
   const handleConsultFromVisit = (visit) => {
+    // For doctors, auto-fill with their user ID; for admin/nurse, leave empty to select
+    const assignedDoctorId = user?.role === 'doctor' ? user.id : visit.doctor;
+    
     setFormData({
       patient: visit.patient,
-      doctor: "",
+      doctor: String(assignedDoctorId),
       date: new Date().toISOString().slice(0, 10),
       symptoms: "",
       diagnosis: "",
@@ -155,6 +185,9 @@ const Consultations = () => {
   const formatPatientId = (id) => {
     return `P${String(id).padStart(3, '0')}`;
   };
+
+  // Check if current user is a doctor
+  const isDoctor = user?.role === 'doctor';
 
   return (
     <>
@@ -176,35 +209,60 @@ const Consultations = () => {
             >
               {showVisits ? "× Visites" : "Visites"}
             </button>
-            <button className="fab" onClick={() => {
-              setShowForm(!showForm);
-              setShowVisits(false);
-              setSelectedVisit(null);
-              if (!showForm) {
-                setFormData({
-                  patient: "",
-                  doctor: "",
-                  date: "",
-                  symptoms: "",
-                  diagnosis: "",
-                  treatment: "",
-                  notes: "",
-                });
-                setEditId(null);
-              }
-            }}>
-              {showForm ? "×" : "+"}
-            </button>
+            {noOnlineDoctors ? (
+              <button 
+                className="fab" 
+                disabled 
+                title="Aucun médecin en ligne - Impossible d'ajouter une consultation"
+                style={{ opacity: 0.5, cursor: 'not-allowed' }}
+              >
+                +
+              </button>
+            ) : (
+              <button className="fab" onClick={() => {
+                // Check if any doctor is online before opening form
+                if (doctors.length === 0) {
+                  alert("Aucun médecin en ligne. Veuillez attendre qu'un médecin se connecte.");
+                  return;
+                }
+                setShowForm(!showForm);
+                setShowVisits(false);
+                setSelectedVisit(null);
+                if (!showForm) {
+                  setFormData({
+                    patient: "",
+                    doctor: isDoctor ? String(user.id) : "",
+                    date: "",
+                    symptoms: "",
+                    diagnosis: "",
+                    treatment: "",
+                    notes: "",
+                  });
+                  setEditId(null);
+                }
+              }}>
+                {showForm ? "×" : "+"}
+              </button>
+            )}
           </div>
         )}
 
         {showVisits && (
           <div className="visits-panel">
-            <h2>Patients en visite</h2>
+            <h2>
+              {isDoctor ? "Mes patients en visite" : "Patients en visite"}
+              {isDoctor && visits.length > 0 && (
+                <span className="visit-count"> ({visits.length})</span>
+              )}
+            </h2>
             {!selectedVisit ? (
               <div className="visits-list">
                 {visits.length === 0 ? (
-                  <p className="no-visits">Aucun patient en visite</p>
+                  <p className="no-visits">
+                    {isDoctor 
+                      ? "Aucun patient vous a été attribué pour le moment" 
+                      : "Aucun patient en visite"}
+                  </p>
                 ) : (
                   visits.map((visit) => (
                     <div 
@@ -220,6 +278,11 @@ const Consultations = () => {
                         <span className="visit-date">
                           {new Date(visit.visit_date).toLocaleDateString()}
                         </span>
+                        {!isDoctor && (
+                          <span className="visit-doctor">
+                            Dr {visit.doctor_first_name} {visit.doctor_last_name}
+                          </span>
+                        )}
                       </div>
                     </div>
                   ))
@@ -268,6 +331,12 @@ const Consultations = () => {
                     <span className="info-label">Type:</span>
                     <span className="info-value">{selectedVisit.patient_type === 'ambulant' ? 'Ambulant' : 'Interne'}</span>
                   </div>
+                  {!isDoctor && (
+                    <div className="info-row">
+                      <span className="info-label">Médecin:</span>
+                      <span className="info-value">Dr {selectedVisit.doctor_first_name} {selectedVisit.doctor_last_name}</span>
+                    </div>
+                  )}
                 </div>
 
                 <button 
@@ -302,12 +371,22 @@ const Consultations = () => {
                 </select>
               )}
 
-              <select required value={formData.doctor} onChange={e => setFormData({ ...formData, doctor: e.target.value })}>
-                <option value="">Sélectionner un médecin</option>
-                {doctors.map(d => (
-                  <option key={d.id} value={d.id}>{d.username}</option>
-                ))}
-              </select>
+              {/* Doctor field: only show for admin/nurse, hidden for doctor (auto-filled) */}
+              {isDoctor ? (
+                <div className="doctor-display">
+                  <label>Médecin:</label>
+                  <span className="doctor-badge">
+                    Dr {user.first_name} {user.last_name} (vous-même)
+                  </span>
+                </div>
+              ) : (
+                <select required value={formData.doctor} onChange={e => setFormData({ ...formData, doctor: e.target.value })}>
+                  <option value="">Sélectionner un médecin</option>
+                  {doctors.map(d => (
+                    <option key={d.id} value={d.id}>{d.username}</option>
+                  ))}
+                </select>
+              )}
 
               <input type="date" required value={formData.date} onChange={e => setFormData({ ...formData, date: e.target.value })} />
 
@@ -339,7 +418,8 @@ const Consultations = () => {
           <tbody>
             {consultations.map(c => {
               const p = patients.find(x => x.id === c.patient);
-              const d = doctors.find(x => x.id === c.doctor);
+              // Use onlineDoctors for displaying past consultations (all doctors)
+              const d = onlineDoctors.find(x => x.id === c.doctor);
 
               return (
                 <tr key={c.id}>

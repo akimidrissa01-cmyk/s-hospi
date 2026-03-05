@@ -403,6 +403,51 @@
 }
 
 /* =============================
+   DOCTOR DISPLAY (AUTO-FILLED)
+============================= */
+.doctor-display {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  background-color: rgba(34, 197, 94, 0.1);
+  border: 1px solid #22c55e;
+  border-radius: 8px;
+}
+
+.doctor-display label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.doctor-badge {
+  background-color: #22c55e;
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* =============================
+   VISIT COUNT BADGE
+============================= */
+.visit-count {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
+/* =============================
+   VISIT DOCTOR INFO
+============================= */
+.visit-doctor {
+  color: var(--blue-light);
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+/* =============================
    BOUTON CONSULTÉS
 ============================= */
 .visit-toggle-btn.consulted-btn {
