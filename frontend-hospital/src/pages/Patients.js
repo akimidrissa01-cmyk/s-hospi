@@ -201,11 +201,13 @@ const Patients = () => {
       const visitData = {
         patient: parseInt(visitFormData.patient),
         doctor: parseInt(visitFormData.doctor),
-        service: visitFormData.service,
+        service: parseInt(visitFormData.service),
         visit_type: visitFormData.visit_type,
         notes: visitFormData.notes,
       };
       
+      console.log("DATA ENVOYEE :", visitData);
+
       await api.post("patients/visits/", visitData);
 
       setVisitFormData({
@@ -220,6 +222,7 @@ const Patients = () => {
       fetchVisits();
     } catch (err) {
       console.error("Erreur visite :", err.response?.data || err);
+      alert("Erreur creation visite")
     }
   };
 

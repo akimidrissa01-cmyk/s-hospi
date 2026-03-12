@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
-import axios from "axios";
+import axios from "../api/axios";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -8,65 +8,58 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
 
-  // Fetch all users from API
+  // 🔹 Fetch all users from API, refresh every 10 sec
   useEffect(() => {
     const fetchUsers = async () => {
-      if (token) {
-        try {
-          const res = await axios.get("http://127.0.0.1:8000/api/accounts/", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setAllUsers(res.data);
-        } catch (err) {
-          console.error("Error fetching users:", err);
-        }
+      if (!token) return;
+
+      try {
+        const res = await axios.get("/accounts/"); // endpoint Django
+        setAllUsers(res.data);
+      } catch (err) {
+        console.error("Error fetching users:", err);
       }
     };
-    fetchUsers();
+
+    fetchUsers(); // initial fetch
+    const interval = setInterval(fetchUsers, 10000); // refresh toutes les 10 secondes
+    return () => clearInterval(interval);
   }, [token]);
 
-  const handleToggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const handleClose = () => {
-    setMenuOpen(false);
-  };
-
+  const handleToggleMenu = () => setMenuOpen(!menuOpen);
+  const handleClose = () => setMenuOpen(false);
   const handleLogout = () => {
     handleClose();
     logout();
   };
 
-  // Get other users (exclude current user)
+  // 🔹 Exclude current user
   const otherUsers = allUsers.filter((u) => u.id !== user?.id);
 
-  // Get first letter of username for avatar
-  const getInitials = (username) => {
-    return username ? username.charAt(0).toUpperCase() : "?";
-  };
+  // 🔹 Initiales pour avatar
+  const getInitials = (username) => (username ? username.charAt(0).toUpperCase() : "?");
 
-  // Check if user is recently active (within last 5 minutes)
-  const isRecentlyActive = (lastLogin) => {
-    if (!lastLogin) return false;
-    const lastLoginDate = new Date(lastLogin);
+  // 🔹 Statut en ligne basé sur last_seen
+  const isRecentlyActive = (lastSeen) => {
+    if (!lastSeen) return false;
+    const lastSeenDate = new Date(lastSeen);
     const now = new Date();
-    const diffMinutes = (now - lastLoginDate) / (1000 * 60);
-    return diffMinutes <= 5;
+    const diffMinutes = (now - lastSeenDate) / (1000 * 60);
+    return diffMinutes <= 5; // considéré actif si dernière activité < 5 min
   };
 
   return (
     <div className="navbar">
+      {/* Utilisateur courant */}
       <div className="user-info" onClick={handleToggleMenu}>
-        <div className="user-avatar">
-          {user?.username ? getInitials(user.username) : "?"}
-        </div>
+        <div className="user-avatar">{getInitials(user?.username)}</div>
         <span className="user-name">{user?.username || "User"}</span>
       </div>
 
+      {/* Menu déroulant */}
       {menuOpen && (
         <div className="dropdown-menu" onClick={handleClose}>
-          {/* Current User Section */}
+          {/* Utilisateur connecté */}
           <div className="menu-section current-user">
             <div className="menu-label">Connecté en tant que</div>
             <div className="current-user-info">
@@ -76,25 +69,19 @@ const Navbar = () => {
 
           <div className="menu-divider"></div>
 
-          {/* Other Connected Users */}
+          {/* Autres utilisateurs */}
           <div className="menu-section">
             <div className="menu-label">AUTRES UTILISATEURS</div>
             {otherUsers.length > 0 ? (
               otherUsers.map((u) => (
                 <div key={u.id} className="other-user">
                   <div className="other-user-avatar-wrapper">
-                    <div className="other-user-avatar">
-                      {getInitials(u.username)}
-                    </div>
+                    <div className="other-user-avatar">{getInitials(u.username)}</div>
                     <div
                       className={`status-indicator ${
-                        isRecentlyActive(u.last_login) ? "online" : "offline"
+                        isRecentlyActive(u.last_seen) ? "online" : "offline"
                       }`}
-                      title={
-                        isRecentlyActive(u.last_login)
-                          ? "En ligne"
-                          : "Hors ligne"
-                      }
+                      title={isRecentlyActive(u.last_seen) ? "En ligne" : "Hors ligne"}
                     ></div>
                   </div>
                   <div className="other-user-info">
@@ -110,7 +97,7 @@ const Navbar = () => {
 
           <div className="menu-divider"></div>
 
-          {/* Logout Option */}
+          {/* Déconnexion */}
           <div className="menu-item logout" onClick={handleLogout}>
             Déconnexion
           </div>

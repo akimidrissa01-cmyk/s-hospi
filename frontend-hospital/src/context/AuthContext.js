@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   // 🔹 Login : récupère le token depuis backend et stocke user & token
   const login = async (username, password) => {
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/token/", {
+      const res = await axios.post("/api/token/", {
         username,
         password,
       });
